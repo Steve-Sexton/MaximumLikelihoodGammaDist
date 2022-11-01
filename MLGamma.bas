@@ -56,22 +56,22 @@ Private Function Trigamma(z As Double) As Double
     End If
     
     If (z <= 0.0001) Then
-        Trigamma = 1# / z / z
+        Trigamma = 1 / z / z
         Exit Function
     End If
     
-    result = 0#
+    result = 0
     x = z
     
-    While (x < 5#)
-        result = result + 1# / x / x
-        x = x + 1#
+    While (x < 5)
+        result = result + 1 / x / x
+        x = x + 1
     Wend
     
-    r = 1# / x / x
-    r2 = r * (1.0# / 42.0# + r * (-1.0# / 33.0#))
+    r = 1 / x / x
+    r2 = r * (1.0 / 42.0 + r * (-1.0 / 33.0))
 
-    result = result + 0.5 * r + (1.0# + r * (1.0# / 6.0# + r * (-1.0# / 30.0# + r2))) / x
+    result = result + 0.5 * r + (1.0 + r * (1.0 / 6.0 + r * (-1.0 / 30.0 + r2))) / x
 
     Trigamma = result
 
@@ -97,8 +97,8 @@ Public Function GammaMLAlpha(x As Range, Optional tolerance As Double = 0.000001
     End If
     
     i = 0
-    avgLogX = 0#
-    logAvgX = 0#
+    avgLogX = 0
+    logAvgX = 0
     
     For Each xi In x
         If (Not IsNumeric(xi.Value)) Then
@@ -118,11 +118,11 @@ Public Function GammaMLAlpha(x As Range, Optional tolerance As Double = 0.000001
     logAvgX = Log(logAvgX / i)
     
     alpha = 0.5 / (logAvgX - avgLogX)
-    alphaPrev = 0#
+    alphaPrev = 0
     
     Do While (Abs(alphaPrev - alpha) > tolerance)
         alphaPrev = alpha
-        alpha = 1# / (1# / alpha + (avgLogX - logAvgX + Log(alpha) - Digamma(alpha)) / (alpha * alpha * (1# / alpha - Trigamma(alpha))))
+        alpha = 1 / (1 / alpha + (avgLogX - logAvgX + Log(alpha) - Digamma(alpha)) / (alpha * alpha * (1 / alpha - Trigamma(alpha))))
     Loop
     
     GammaMLAlpha = alpha
